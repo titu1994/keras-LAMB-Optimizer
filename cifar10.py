@@ -13,7 +13,7 @@ from resnet import ResNet18, ResNet34
 from keras_lamb import LAMB
 
 # Training parameters
-batch_size = 32
+batch_size = 512
 epochs = 200
 data_augmentation = True
 num_classes = 10
@@ -36,7 +36,7 @@ https://arxiv.org/pdf/1603.05027.pdf
 subtract_pixel_mean = True
 
 # Model version
-n = 18  # [can be 18 or 34]
+n = 34  # [can be 18 or 34]
 
 assert n in (18, 34), "N must be 18 or 34"
 
@@ -118,7 +118,7 @@ filepath = os.path.join(save_dir, model_name)
 
 # Prepare callbacks for model saving and for learning rate adjustment.
 checkpoint = ModelCheckpoint(filepath=filepath,
-                             monitor='loss',
+                             monitor='val_acc',
                              verbose=1,
                              save_best_only=True,
                              save_weights_only=True)
