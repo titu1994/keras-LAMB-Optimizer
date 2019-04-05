@@ -1,5 +1,7 @@
 from keras.optimizers import Optimizer
 from keras import backend as K
+import tensorflow as tf
+
 
 class LAMB(Optimizer):
     """LAMB optimizer.
@@ -67,7 +69,12 @@ class LAMB(Optimizer):
             r1 = K.sqrt(K.sum(K.square(p)))
             r2 = K.sqrt(K.sum(K.square(p_dash)))
 
-            r = r1 / r2
+            r = tf.where(tf.greater(r1, 0.),
+                         tf.where(tf.greater(r2, 0.),
+                                  r1 / r2,
+                                  1.0),
+                         1.0)
+            # r = r1 / r2
             eta = r * lr
 
             p_t = p - eta * p_dash
