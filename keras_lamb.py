@@ -3,8 +3,8 @@ from keras import backend as K
 import tensorflow as tf
 
 
-class LAMB(Optimizer):
-    """LAMB optimizer.
+class LAMBOptimizer(Optimizer):
+    """LAMBOptimizer optimizer.
 
     Default parameters follow those provided in the original paper.
 
@@ -23,7 +23,7 @@ class LAMB(Optimizer):
 
     def __init__(self, lr=0.001, beta_1=0.9, beta_2=0.999,
                  epsilon=None, weight_decay=0.01, decay=0., **kwargs):
-        super(LAMB, self).__init__(**kwargs)
+        super(LAMBOptimizer, self).__init__(**kwargs)
         with K.name_scope(self.__class__.__name__):
             self.iterations = K.variable(0, dtype='int64', name='iterations')
             self.lr = K.variable(lr, name='lr')
@@ -95,5 +95,5 @@ class LAMB(Optimizer):
                   'decay': float(K.get_value(self.decay)),
                   'epsilon': self.epsilon,
                   'weight_decay': self.weight_decay}
-        base_config = super(LAMB, self).get_config()
+        base_config = super(LAMBOptimizer, self).get_config()
         return dict(list(base_config.items()) + list(config.items()))

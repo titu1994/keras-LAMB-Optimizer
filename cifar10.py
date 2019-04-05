@@ -10,7 +10,7 @@ from keras.callbacks import (ModelCheckpoint,
                              TensorBoard)
 
 from resnet import ResNet18, ResNet34
-from keras_lamb import LAMB
+from keras_lamb import LAMBOptimizer
 
 # Training parameters
 batch_size = 512
@@ -100,8 +100,8 @@ else:
     model = ResNet34(input_shape=input_shape, depth=depth)
 
 model.compile(loss='categorical_crossentropy',
-              optimizer=LAMB(lr=lr_schedule(0),
-                             weight_decay=weight_decay),
+              optimizer=LAMBOptimizer(lr=lr_schedule(0),
+                                      weight_decay=weight_decay),
               metrics=['accuracy'])
 model.summary()
 print(model_type)
